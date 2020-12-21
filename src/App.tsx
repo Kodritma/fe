@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout, Menu, Carousel } from "antd";
+import logo from "./images/logo.png";
+
+const { Header, Content, Footer } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout className="height-100">
+      <Header className="header">
+        <img src={logo} />
+        <Menu theme="dark" mode="horizontal">
+          <Menu.Item key="1">Algoritma Alıştırmaları</Menu.Item>
+          <Menu.Item key="2">Videolu Dersler</Menu.Item>
+          <Menu.Item key="3">Forum</Menu.Item>
+          <Menu.Item key="4">Blog</Menu.Item>
+          <Menu.Item key="5">Üye Girişi</Menu.Item>
+        </Menu>
+      </Header>
+      <Content style={{ display:"flex", alignItems:"center", justifyContent:"center"}}>
+        <Carousel autoplay style={{width:"90vw"}}>
+          <div>
+            <h3 className="carousel-title">1</h3>
+          </div>
+          <div>
+            <h3 className="carousel-title">2</h3>
+          </div>
+          <div>
+            <h3 className="carousel-title">3</h3>
+          </div>
+          <div>
+            <h3 className="carousel-title">4</h3>
+          </div>
+        </Carousel>
+      </Content>
+      <Footer style={{ textAlign: "center" }}>Kodritma © 2020</Footer>
+    </Layout>
   );
 }
 

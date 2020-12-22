@@ -4,8 +4,7 @@ import {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 
-const clientId =
-  "704735418180-b15063pfuh0taei1agnpj4s49rm035br.apps.googleusercontent.com";
+const clientId = "googleclientID";
 
 const onSuccess = (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
   console.log("[Login Success] res", res);

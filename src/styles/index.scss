@@ -17,6 +17,10 @@ body,
 .header {
   display: flex;
   justify-content: space-between;
+
+  .ant-menu {
+    font-size: 1rem;
+  }
 }
 .carousel-title {
   height: 70vh;

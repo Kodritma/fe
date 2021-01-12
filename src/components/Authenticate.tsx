@@ -1,5 +1,5 @@
 import * as queryString from "query-string";
-import { Suspense, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useHistory, useLocation } from "react-router";
 import fetchUserDetails from "../googleLogin/fetch-user-details";
 
@@ -33,16 +33,15 @@ function Authenticate() {
 
     if (error) {
       console.log(`An error occurred: ${error}`);
-    } else {
+    } else if (code) {
       getUserDetails();
+    } else {
+      // if user manually tries to go to /authenticate route
+      history.push("/login");
     }
   }, [code, error, history]);
 
-  return (
-    <Suspense fallback={<p>Authenticating...</p>}>
-      <div>Authenticate</div>
-    </Suspense>
-  );
+  return <div>Authenticating...</div>;
 }
 
 export default Authenticate;

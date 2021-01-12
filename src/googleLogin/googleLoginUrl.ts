@@ -12,4 +12,6 @@ const stringifiedParams = queryString.stringify({
   prompt: "consent",
 });
 
-export const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`;
+const url = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`;
+
+export default url;

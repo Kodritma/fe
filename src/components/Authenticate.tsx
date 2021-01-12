@@ -1,9 +1,9 @@
 import * as queryString from "query-string";
 import { useEffect, useMemo } from "react";
 import { useHistory, useLocation } from "react-router";
-import fetchUserDetails from "../googleLogin/fetch-user-details";
+import fetchUserData from "../googleLogin/fetchUserData";
 
-interface UserDetails {
+interface UserData {
   email: string;
   family_name: string;
   given_name: string;
@@ -21,10 +21,10 @@ function Authenticate() {
   const { code, error } = useMemo(() => queryString.parse(search), [search]);
 
   useEffect(() => {
-    async function getUserDetails() {
+    async function getUserData() {
       try {
-        const userDetails: UserDetails = await fetchUserDetails(code as string);
-        console.log({ userDetails });
+        const userData: UserData = await fetchUserData(code as string);
+        console.log({ userData });
         history.push("/");
       } catch (error) {
         console.log({ error });
@@ -34,7 +34,7 @@ function Authenticate() {
     if (error) {
       console.log(`An error occurred: ${error}`);
     } else if (code) {
-      getUserDetails();
+      getUserData();
     } else {
       // if user manually tries to go to /authenticate route
       history.push("/login");

@@ -10,9 +10,6 @@ interface AuthState {
   family_name: string;
   picture: string;
   locale: string;
-  access_token: string;
-  iat: number;
-  exp: number;
   isLoggedIn: boolean;
   token: string;
   login: (code?: string) => void;
@@ -38,16 +35,13 @@ const initialState = {
   family_name: "",
   picture: "",
   locale: "",
-  access_token: "",
-  iat: 0,
-  exp: 0,
 };
 
 export const AuthContext = createContext<AuthState>(initialState);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, setState] = useState<AuthState>(initialState);
-
+  console.log({ state });
   useEffect(() => {
     check();
   }, []);
@@ -55,7 +49,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const login = (code?: string) => {
     async function getUserData() {
       try {
-        const { data } = await axiosWithAuth().get(`/auth?code=${code}`);
+        const { data } = await axiosWithAuth().get(`/auth/login?code=${code}`);
         setState({ ...data });
       } catch {
         setState({ ...initialState });

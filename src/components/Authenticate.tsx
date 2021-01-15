@@ -1,47 +1,34 @@
 import * as queryString from "query-string";
-import { useEffect, useMemo } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
-import fetchUserData from "../googleLogin/fetchUserData";
-
-interface UserData {
-  email: string;
-  family_name: string;
-  given_name: string;
-  id: string;
-  locale: string;
-  name: string;
-  picture: string;
-  verified_email: boolean;
-}
+import { AuthContext } from "../authContext";
 
 function Authenticate() {
-  const { search } = useLocation<{ search: string }>();
+  const [error, setError] = useState("");
+  const { login } = useContext(AuthContext);
+  const { search } = useLocation();
+
   const history = useHistory();
 
-  const { code, error } = useMemo(() => queryString.parse(search), [search]);
-
   useEffect(() => {
-    async function getUserData() {
-      try {
-        const userData: UserData = await fetchUserData(code as string);
-        console.log({ userData });
-        history.push("/");
-      } catch (error) {
-        console.log({ error });
-      }
-    }
+    const { code, error } = queryString.parse(search);
 
     if (error) {
-      console.log(`An error occurred: ${error}`);
+      setError("Giriş sırasında hata oluştu.");
     } else if (code) {
-      getUserData();
+      login(code as string);
+      history.push("/");
     } else {
       // if user manually tries to go to /authenticate route
       history.push("/login");
     }
-  }, [code, error, history]);
+  }, [history, login, search]);
 
-  return <div>Authenticating...</div>;
+  return (
+    <div>
+      <p>{error || "Authenticating..."}</p>
+    </div>
+  );
 }
 
 export default Authenticate;

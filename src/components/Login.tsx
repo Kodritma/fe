@@ -1,31 +1,26 @@
-import { useEffect } from "react";
-import { useHistory } from "react-router";
-import googleLoginUrl from "../googleLogin/googleLoginUrl";
-import useLoginStatus from "../utils/useLoginStatus";
+import { useContext } from "react";
+import { Redirect } from "react-router";
+import { AuthContext } from "../authContext";
+import googleLoginUrl from "../utils/googleLoginUrl";
+import { Button, Layout } from "antd";
+import googleIcon from "../images/google-icon.png";
+
+const { Content } = Layout;
 
 const Login = () => {
-  // access_token will be received from localStorage and passed here
-  const isLoggedIn = useLoginStatus("");
+  const { isLoggedIn } = useContext(AuthContext);
 
-  const history = useHistory();
-
-  useEffect(() => {
-    isLoggedIn && history.push("/");
-  }, [isLoggedIn, history]);
-
-  console.log({ isLoggedIn });
   return (
-    <div>
-      <h1>
-        {isLoggedIn === undefined ? (
-          <>Checking...</>
-        ) : isLoggedIn === false ? (
-          <a href={googleLoginUrl}>Login</a>
-        ) : (
-          <></>
-        )}
-      </h1>
-    </div>
+    <Content className="login-content">
+      {!isLoggedIn ? (
+        <Button type="link" href={googleLoginUrl} className="login-button">
+          <img src={googleIcon} alt="Google Icon" />
+          Google ile Giriş Yap
+        </Button>
+      ) : (
+        <Redirect to="/" />
+      )}
+    </Content>
   );
 };
 

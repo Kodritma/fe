@@ -34,3 +34,26 @@ body,
   align-items: center;
   justify-content: center;
 }
+
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .login-button {
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    padding: 1.2rem;
+    border-radius: 3px;
+    box-shadow: 0 0 3px #ccc;
+    transition: all 0.2s;
+    &:hover {
+      box-shadow: 0 0 5px #aaa;
+    }
+    img {
+      width: 18px;
+      height: 18px;
+      margin: 0 0.6rem 0 0;
+    }
+  }
+}

@@ -31,7 +31,11 @@ const Header = () => {
             <Link to="/login">Üye Girişi</Link>
           </Menu.Item>
         ) : (
-          <SubMenu key="sub1" icon={avatar} title="Panel">
+          <SubMenu
+            key="sub1"
+            title={<>Kontrol Paneli {avatar}</>}
+            className="panel-menu"
+          >
             <Menu.Item key="7">Profil</Menu.Item>
             <Menu.Item key="8">Ayarlar</Menu.Item>
             <Menu.Item key="9">

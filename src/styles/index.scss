@@ -57,3 +57,13 @@ body,
     }
   }
 }
+
+.panel-menu {
+  .ant-menu-submenu-title {
+    display: flex;
+    align-items: center;
+    img {
+      margin: 0 0 0 1rem;
+    }
+  }
+}

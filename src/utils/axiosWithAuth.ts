@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosWithAuth = () =>
   axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: process.env.REACT_APP_BACKEND,
     withCredentials: true,
   });
 

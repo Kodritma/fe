@@ -2,7 +2,7 @@ import * as queryString from "query-string";
 
 const stringifiedParams = queryString.stringify({
   client_id: process.env.REACT_APP_G_CLIENT_ID,
-  redirect_uri: process.env.REACT_APP_BACKEND + "/authenticate",
+  redirect_uri: process.env.REACT_APP_FRONTEND + "/authenticate",
   scope: [
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",

@@ -41,7 +41,7 @@ export const AuthContext = createContext<AuthState>(initialState);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, setState] = useState<AuthState>(initialState);
-  console.log({ state });
+
   useEffect(() => {
     check();
   }, []);

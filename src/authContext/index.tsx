@@ -73,8 +73,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       try {
         const { data } = await axiosWithAuth().get(`/auth/check`);
         setState({ ...data });
-      } catch {
+      } catch (error) {
         setState({ ...initialState });
+        console.log("check failed", JSON.stringify(error));
       }
     }
     checkIfLoggedIn();

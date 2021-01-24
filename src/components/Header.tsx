@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../authContext";
 import logo from "../images/logo.png";
+import googleLoginUrl from "../utils/googleLoginUrl";
 
 const { Header: AntHeader } = Layout;
 
@@ -28,7 +29,7 @@ const Header = () => {
         <Menu.Item key="4">Blog</Menu.Item>
         {!isLoggedIn ? (
           <Menu.Item key="5">
-            <Link to="/login">Üye Girişi</Link>
+            <a href={googleLoginUrl}>Üye Girişi</a>
           </Menu.Item>
         ) : (
           <SubMenu

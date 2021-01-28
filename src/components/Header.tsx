@@ -49,7 +49,9 @@ const Header = () => {
             title={<>Kontrol Paneli {avatar}</>}
             className="panel-menu"
           >
-            <Menu.Item key="7">Profil</Menu.Item>
+            <Menu.Item key="7">
+              <Link to="/user/panel">Profil</Link>
+            </Menu.Item>
             <Menu.Item key="8">Ayarlar</Menu.Item>
             <Menu.Item key="9">
               <Link to="/" onClick={logout} title="Çıkış Yap">

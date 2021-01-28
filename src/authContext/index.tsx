@@ -7,7 +7,7 @@ import {
 } from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
-interface AuthState {
+export interface AuthState {
   ID: string;
   display_name: string;
   email: string;

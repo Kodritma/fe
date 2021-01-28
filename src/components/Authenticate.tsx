@@ -20,13 +20,13 @@ function Authenticate() {
       history.push("/");
     } else {
       // if user manually tries to go to /authenticate route
-      history.push("/login");
+      history.push("/");
     }
   }, [history, login, search]);
 
   return (
     <div>
-      <p>{error || "Authenticating..."}</p>
+      <p>{error || "Giriş yapılıyor..."}</p>
     </div>
   );
 }

@@ -1,7 +1,10 @@
+import { UserOutlined } from "@ant-design/icons";
 import { Form, Input, Button } from "antd";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../authContext";
 import axiosWithAuth from "../../utils/axiosWithAuth";
+import notify from "../notify";
+import InnerHeader from "./InnerHeader";
 
 function Profile() {
   const userDetails = useContext(AuthContext);
@@ -17,7 +20,22 @@ function Profile() {
   };
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    axiosWithAuth(userDetails)
+      .post("/user/update-profile", { ...values })
+      .then(() => {
+        notify(
+          "success",
+          "Başarılı!",
+          "Profilinizde yaptığınız değişiklikler başarıyla kaydedilmiştir!"
+        );
+      })
+      .catch(() => {
+        notify(
+          "error",
+          "Başarısız!",
+          "Bir hata oluştu ve profilinizdeki değişiklikler kaydedilmedi!"
+        );
+      });
   };
 
   const onFinishFailed = (errorInfo: any) => {};
@@ -30,7 +48,9 @@ function Profile() {
     if (!newSlug) {
       return Promise.reject();
     } else if (slug !== newSlug) {
-      return axiosWithAuth(userDetails).post("/user/check-slug", { newSlug });
+      return axiosWithAuth(userDetails).post("/user/check-slug", {
+        newSlug,
+      });
     }
   };
 
@@ -49,6 +69,11 @@ function Profile() {
       onFinishFailed={onFinishFailed}
       validateTrigger="onBlur"
     >
+      <InnerHeader
+        icon={<UserOutlined />}
+        title="Profil"
+        subTitle="Profil detaylarınızı güncelleyin"
+      />
       <Form.Item
         label="Görünen İsim"
         name="display_name"
@@ -56,7 +81,7 @@ function Profile() {
           { required: true, message: "Görünen isim alanı boş bırakılamaz!" },
         ]}
       >
-        <Input />
+        <Input name="display_name" />
       </Form.Item>
 
       <Form.Item
@@ -64,7 +89,7 @@ function Profile() {
         name="first_name"
         rules={[{ required: true, message: "İsim alanı boş bırakılamaz!" }]}
       >
-        <Input />
+        <Input name="first_name" />
       </Form.Item>
 
       <Form.Item
@@ -72,7 +97,7 @@ function Profile() {
         name="last_name"
         rules={[{ required: true, message: "Soyisim alanı boş bırakılamaz!" }]}
       >
-        <Input />
+        <Input name="last_name" />
       </Form.Item>
 
       <Form.Item
@@ -84,12 +109,12 @@ function Profile() {
             message: "Profil linki boş bırakılamaz!",
           },
           {
-            message: "Profil linki benzersiz olmalıdır!",
+            message: "Profil linki başkası tarafından kullanılmaktadır!",
             validator: checkSlug,
           },
         ]}
       >
-        <Input onChange={onSlugChange} />
+        <Input name="slug" onChange={onSlugChange} />
       </Form.Item>
 
       <Form.Item {...tailLayout}>

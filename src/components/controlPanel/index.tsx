@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Layout, Menu } from "antd";
-import { SettingOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  CarryOutOutlined,
+  FileTextOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 import Home from "./Home";
 import Progress from "./Progress";
@@ -10,7 +15,7 @@ import Settings from "./Settings";
 const { Content, Sider } = Layout;
 
 function Panel() {
-  const [selected, setSelected] = useState<string>("");
+  const [selected, setSelected] = useState<string>("0");
 
   const renderPanelContent = () => {
     switch (selected) {
@@ -20,6 +25,7 @@ function Panel() {
         return <Profile />;
       case "3":
         return <Settings />;
+      case "0":
       default:
         return <Home />;
     }
@@ -34,7 +40,10 @@ function Panel() {
           onClick={({ key }) => setSelected(String(key))}
           selectedKeys={[selected]}
         >
-          <Menu.Item icon={<UserOutlined />} key="1">
+          <Menu.Item icon={<FileTextOutlined />} key="0">
+            Özet
+          </Menu.Item>
+          <Menu.Item icon={<CarryOutOutlined />} key="1">
             Seviye Detayları
           </Menu.Item>
           <Menu.Item icon={<UserOutlined />} key="2">
@@ -45,9 +54,7 @@ function Panel() {
           </Menu.Item>
         </Menu>
       </Sider>
-      <Content style={{ padding: "0 24px", minHeight: 280 }}>
-        {renderPanelContent()}
-      </Content>
+      <Content>{renderPanelContent()}</Content>
     </Layout>
   );
 }

@@ -1,17 +1,20 @@
+import { FileTextOutlined } from "@ant-design/icons";
+import { Content } from "antd/lib/layout/layout";
 import { useContext } from "react";
 import { AuthContext } from "../../authContext";
+import InnerHeader from "./InnerHeader";
 
 function Home() {
   const details = useContext(AuthContext);
 
   return (
-    <div className="profile-default">
-      <h2>Merhaba, {details.display_name}!</h2>
-      <p>
-        Bu panelden çözdüğünüz Algoritma Alıştırmaları ve izlediğiniz Video
-        Dersler'in detaylarını görebilir ve profilinizi düzenleyebilirsiniz.
-      </p>
-    </div>
+    <Content className="profile-default">
+      <InnerHeader
+        icon={<FileTextOutlined />}
+        title={`Merhaba, ${details.display_name}!`}
+        subTitle="Hesabınızı yönetin."
+      />
+    </Content>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { AuthContext } from "../authContext";
@@ -10,6 +10,7 @@ const { Header: AntHeader } = Layout;
 
 const Header = () => {
   const { isLoggedIn, picture, logout } = useContext(AuthContext);
+  const history = useHistory();
 
   const avatar = (
     <img
@@ -48,11 +49,8 @@ const Header = () => {
             key="sub1"
             title={<>Kontrol Paneli {avatar}</>}
             className="panel-menu"
+            onTitleClick={() => history.push("/user/panel")}
           >
-            <Menu.Item key="7">
-              <Link to="/user/panel">Profil</Link>
-            </Menu.Item>
-            <Menu.Item key="8">Ayarlar</Menu.Item>
             <Menu.Item key="9">
               <Link to="/" onClick={logout} title="Çıkış Yap">
                 Çıkış Yap

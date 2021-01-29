@@ -54,7 +54,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     async function getUserData() {
       try {
         const { data } = await axiosWithAuth().get(`/auth/login?code=${code}`);
-        console.log({ data });
         setState({ ...data });
       } catch {
         setState({ ...initialState, loading: false });
@@ -77,10 +76,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     async function checkIfLoggedIn() {
       try {
         const { data } = await axiosWithAuth().get(`/auth/check`);
-        setState({ ...data });
-      } catch (error) {
-        setState({ ...initialState, loading: false });
-      }
+        setState({ ...initialState, ...data, loading: false });
+      } catch {}
     }
     checkIfLoggedIn();
   }, []);

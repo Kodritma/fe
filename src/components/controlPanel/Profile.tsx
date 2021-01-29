@@ -8,8 +8,10 @@ import InnerHeader from "./InnerHeader";
 
 function Profile() {
   const userDetails = useContext(AuthContext);
-  const { display_name, first_name, last_name, slug } = userDetails;
+  const { display_name, first_name, last_name, slug, check } = userDetails;
+
   const [newSlug, setNewSlug] = useState(slug);
+  const [loading, setLoading] = useState(false);
 
   const layout = {
     labelCol: { span: 8 },
@@ -20,26 +22,40 @@ function Profile() {
   };
 
   const onFinish = (values: any) => {
-    axiosWithAuth()
-      .post("/user/update-profile", { ...values })
-      .then(() => {
-        userDetails.check();
-        notify(
-          "success",
-          "Başarılı!",
-          "Profilinizde yaptığınız değişiklikler başarıyla kaydedilmiştir!"
-        );
-      })
-      .catch(() => {
-        notify(
-          "error",
-          "Başarısız!",
-          "Bir hata oluştu ve profilinizdeki değişiklikler kaydedilmedi!"
-        );
-      });
+    if (
+      !(
+        values.display_name === display_name &&
+        values.first_name === first_name &&
+        values.last_name === last_name &&
+        values.slug === slug
+      )
+    ) {
+      setLoading(true);
+      axiosWithAuth()
+        .post("/user/update-profile", { ...values })
+        .then(() => {
+          check();
+          notify(
+            "success",
+            "Başarılı!",
+            "Profilinizde yaptığınız değişiklikler başarıyla kaydedilmiştir!"
+          );
+        })
+        .catch(() => {
+          notify(
+            "error",
+            "Başarısız!",
+            "Bir hata oluştu ve profilinizdeki değişiklikler kaydedilmedi!"
+          );
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
+    setLoading(false);
     console.log(errorInfo);
   };
 
@@ -48,6 +64,7 @@ function Profile() {
   };
 
   const checkSlug = () => {
+    setLoading(true);
     if (!newSlug) {
       return Promise.reject();
     } else if (slug !== newSlug) {
@@ -112,7 +129,7 @@ function Profile() {
           },
           {
             message: "Profil linki başkası tarafından kullanılmaktadır!",
-            validator: checkSlug,
+            validator: async () => checkSlug().finally(() => setLoading(false)),
           },
         ]}
       >
@@ -120,7 +137,7 @@ function Profile() {
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={loading}>
           Kaydet
         </Button>
       </Form.Item>

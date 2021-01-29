@@ -9,7 +9,7 @@ import googleLoginUrl from "../utils/googleLoginUrl";
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
-  const { isLoggedIn, picture, logout } = useContext(AuthContext);
+  const { isLoggedIn, loading, picture, logout } = useContext(AuthContext);
   const history = useHistory();
 
   const avatar = (
@@ -38,7 +38,7 @@ const Header = () => {
             Blog
           </a>
         </Menu.Item>
-        {!isLoggedIn ? (
+        {!loading && !isLoggedIn ? (
           <Menu.Item key="5">
             <a href={googleLoginUrl} title="Üye Girişi">
               Üye Girişi

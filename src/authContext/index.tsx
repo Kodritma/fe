@@ -13,6 +13,7 @@ export interface AuthState {
   email: string;
   first_name: string;
   isLoggedIn: boolean;
+  loading: boolean;
   is_admin: boolean;
   last_name: string;
   picture: string;
@@ -33,6 +34,7 @@ const initialState = {
   email: "",
   first_name: "",
   isLoggedIn: false,
+  loading: true,
   is_admin: false,
   last_name: "",
   picture: "",
@@ -54,7 +56,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const { data } = await axiosWithAuth().get(`/auth/login?code=${code}`);
         setState({ ...data });
       } catch {
-        setState({ ...initialState });
+        setState({ ...initialState, loading: false });
       }
     }
     getUserData();
@@ -64,7 +66,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     async function destroyCookie() {
       try {
         await axiosWithAuth().get("/auth/logout");
-        setState({ ...initialState });
+        setState({ ...initialState, loading: false });
       } catch {}
     }
     destroyCookie();
@@ -76,7 +78,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const { data } = await axiosWithAuth().get(`/auth/check`);
         setState({ ...data });
       } catch (error) {
-        setState({ ...initialState });
+        setState({ ...initialState, loading: false });
       }
     }
     checkIfLoggedIn();
@@ -89,7 +91,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider value={{ ...state, login, logout, check }}>
-      {children}
+      {state.loading ? <p>Loading...</p> : children}
     </AuthContext.Provider>
   );
 };

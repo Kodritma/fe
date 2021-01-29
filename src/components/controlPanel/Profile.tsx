@@ -20,7 +20,7 @@ function Profile() {
   };
 
   const onFinish = (values: any) => {
-    axiosWithAuth(userDetails)
+    axiosWithAuth()
       .post("/user/update-profile", { ...values })
       .then(() => {
         userDetails.check();
@@ -51,7 +51,7 @@ function Profile() {
     if (!newSlug) {
       return Promise.reject();
     } else if (slug !== newSlug) {
-      return axiosWithAuth(userDetails).post("/user/check-slug", {
+      return axiosWithAuth().post("/user/check-slug", {
         newSlug,
       });
     }

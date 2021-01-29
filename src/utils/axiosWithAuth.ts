@@ -1,12 +1,8 @@
 import axios from "axios";
-import { AuthState } from "../authContext";
 
-const axiosWithAuth = (details?: AuthState) =>
+const axiosWithAuth = () =>
   axios.create({
     baseURL: process.env.REACT_APP_BACKEND,
-    headers: {
-      user_details: JSON.stringify(details),
-    },
     withCredentials: true,
   });
 

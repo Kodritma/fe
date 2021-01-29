@@ -5,7 +5,6 @@ import Home from "./components/Home";
 import { Route } from "react-router-dom";
 import Authenticate from "./components/Authenticate";
 import AuthProvider from "./authContext";
-import Logout from "./components/Logout";
 import ControlPanel from "./components/controlPanel";
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
       <Layout className="height-100">
         <Header />
         <Route exact path="/" component={Home} />
-        <Route exact path="/logout" component={Logout} />
         <Route exact path="/authenticate" component={Authenticate} />
         <Route exact path="/user/panel" component={ControlPanel} />
         <Footer />

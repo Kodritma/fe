@@ -47,7 +47,6 @@ export const AuthContext = createContext<AuthState>(initialState);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, setState] = useState<AuthState>(initialState);
-  console.log({ state });
 
   const login = useCallback((code?: string) => {
     async function getUserData() {
@@ -86,6 +85,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     check();
   }, [check]);
+  console.log({ state, logout });
 
   return (
     <AuthContext.Provider value={{ ...state, login, logout, check }}>

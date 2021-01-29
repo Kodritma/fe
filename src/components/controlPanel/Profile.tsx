@@ -23,6 +23,7 @@ function Profile() {
     axiosWithAuth(userDetails)
       .post("/user/update-profile", { ...values })
       .then(() => {
+        userDetails.check();
         notify(
           "success",
           "Başarılı!",
@@ -38,7 +39,9 @@ function Profile() {
       });
   };
 
-  const onFinishFailed = (errorInfo: any) => {};
+  const onFinishFailed = (errorInfo: any) => {
+    console.log(errorInfo);
+  };
 
   const onSlugChange = (e: React.FormEvent<HTMLInputElement>) => {
     setNewSlug(e.currentTarget.value);
@@ -52,6 +55,7 @@ function Profile() {
         newSlug,
       });
     }
+    return Promise.resolve();
   };
 
   const initialValues = {

@@ -9,7 +9,7 @@ const stringifiedParams = queryString.stringify({
   ].join(" "), // space seperated string
   response_type: "code",
   access_type: "offline",
-  prompt: "select_account",
+  prompt: "consent",
 });
 
 const url = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`;

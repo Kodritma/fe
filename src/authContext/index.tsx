@@ -76,7 +76,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     async function checkIfLoggedIn() {
       try {
         const { data } = await axiosWithAuth().get(`/auth/check`);
-        setState({ ...initialState, ...data, loading: false });
+        setState({ ...data, loading: false });
       } catch {}
     }
     checkIfLoggedIn();

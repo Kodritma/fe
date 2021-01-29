@@ -54,6 +54,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     async function getUserData() {
       try {
         const { data } = await axiosWithAuth().get(`/auth/login?code=${code}`);
+        console.log({ data });
         setState({ ...data });
       } catch {
         setState({ ...initialState, loading: false });
@@ -87,7 +88,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     check();
   }, [check]);
-  console.log({ state, logout });
+  console.log({ state });
 
   return (
     <AuthContext.Provider value={{ ...state, login, logout, check }}>

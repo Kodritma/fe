@@ -51,9 +51,7 @@ function Profile() {
     if (!newSlug) {
       return Promise.reject();
     } else if (slug !== newSlug) {
-      return axiosWithAuth().post("/user/check-slug", {
-        newSlug,
-      });
+      return axiosWithAuth().post("/user/check-slug", { newSlug });
     }
     return Promise.resolve();
   };

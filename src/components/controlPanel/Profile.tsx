@@ -1,56 +1,80 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Form, Input, Button } from "antd";
+// Global imports
 import { useContext, useState } from "react";
+import { Form, Input, Button } from "antd";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
+
+// Local imports
 import { AuthContext } from "../../authContext";
 import axiosWithAuth from "../../utils/axiosWithAuth";
 import notify from "../notify";
+
+// Components
 import InnerHeader from "./InnerHeader";
+
+interface FormValues {
+  display_name: string;
+  first_name: string;
+  last_name: string;
+  slug: string;
+}
 
 function Profile() {
   const userDetails = useContext(AuthContext);
   const { display_name, first_name, last_name, slug, check } = userDetails;
+  const defaultForm = { display_name, first_name, last_name, slug };
 
-  const [newSlug, setNewSlug] = useState(slug);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [form, setForm] = useState<FormValues>(defaultForm);
+  const [changed, setChanged] = useState<boolean>(false);
 
-  const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 15 },
+  const onFormChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+
+    setForm({ ...form, [name]: value });
+
+    // Check all values first
+    let isChanged: boolean = false;
+
+    Object.entries(form).forEach(([key, activeValue]) => {
+      const checkValue = key === name ? value : activeValue;
+      const stateValue = userDetails[key as keyof FormValues];
+
+      if (key !== name && stateValue !== checkValue) {
+        isChanged = true;
+      }
+    });
+
+    setChanged(isChanged);
+
+    // Check the most recently changed value
+    if (userDetails[name as keyof FormValues] !== value) {
+      setChanged(true);
+    }
   };
-  const tailLayout = {
-    wrapperCol: { offset: 8, span: 15 },
-  };
 
-  const onFinish = (values: any) => {
-    if (
-      !(
-        values.display_name === display_name &&
-        values.first_name === first_name &&
-        values.last_name === last_name &&
-        values.slug === slug
-      )
-    ) {
+  const layout = { labelCol: { span: 8 }, wrapperCol: { span: 15 } };
+  const tailLayout = { wrapperCol: { offset: 8, span: 15 } };
+
+  const onFinish = async (values: any) => {
+    if (changed) {
       setLoading(true);
-      axiosWithAuth()
-        .post("/user/update-profile", { ...values })
-        .then(() => {
-          check();
-          notify(
-            "success",
-            "Başarılı!",
-            "Profilinizde yaptığınız değişiklikler başarıyla kaydedilmiştir!"
-          );
-        })
-        .catch(() => {
-          notify(
-            "error",
-            "Başarısız!",
-            "Bir hata oluştu ve profilinizdeki değişiklikler kaydedilmedi!"
-          );
-        })
-        .finally(() => {
-          setLoading(false);
+      try {
+        await axiosWithAuth().post("/user/update-profile", { ...values });
+        check();
+        notify({
+          type: "success",
+          message: "Başarılı!",
+          description: "Profilinizde yaptığınız değişiklikler başarıyla kaydedilmiştir!",
         });
+        setChanged(false);
+      } catch {
+        notify({
+          type: "error",
+          message: "Başarısız!",
+          description: "Bir hata oluştu ve profilinizdeki değişiklikler kaydedilmedi!",
+        });
+      }
+      setLoading(false);
     }
   };
 
@@ -59,26 +83,17 @@ function Profile() {
     console.log(errorInfo);
   };
 
-  const onSlugChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setNewSlug(e.currentTarget.value);
-  };
-
   const checkSlug = () => {
     setLoading(true);
-    if (!newSlug) {
+    if (!form.slug) {
       return Promise.reject();
-    } else if (slug !== newSlug) {
-      return axiosWithAuth().post("/user/check-slug", { newSlug });
+    } else if (slug !== form.slug) {
+      return axiosWithAuth().post("/user/check-slug", { newSlug: form.slug });
     }
     return Promise.resolve();
   };
 
-  const initialValues = {
-    display_name,
-    first_name,
-    last_name,
-    slug,
-  };
+  const initialValues = { display_name, first_name, last_name, slug };
 
   return (
     <Form
@@ -96,11 +111,9 @@ function Profile() {
       <Form.Item
         label="Görünen İsim"
         name="display_name"
-        rules={[
-          { required: true, message: "Görünen isim alanı boş bırakılamaz!" },
-        ]}
+        rules={[{ required: true, message: "Görünen isim alanı boş bırakılamaz!" }]}
       >
-        <Input name="display_name" />
+        <Input name="display_name" onChange={onFormChange} />
       </Form.Item>
 
       <Form.Item
@@ -108,7 +121,7 @@ function Profile() {
         name="first_name"
         rules={[{ required: true, message: "İsim alanı boş bırakılamaz!" }]}
       >
-        <Input name="first_name" />
+        <Input name="first_name" onChange={onFormChange} />
       </Form.Item>
 
       <Form.Item
@@ -116,7 +129,7 @@ function Profile() {
         name="last_name"
         rules={[{ required: true, message: "Soyisim alanı boş bırakılamaz!" }]}
       >
-        <Input name="last_name" />
+        <Input name="last_name" onChange={onFormChange} />
       </Form.Item>
 
       <Form.Item
@@ -133,13 +146,14 @@ function Profile() {
           },
         ]}
       >
-        <Input name="slug" onChange={onSlugChange} />
+        <Input name="slug" onChange={onFormChange} />
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" loading={loading}>
+        <Button type={changed ? "primary" : "default"} htmlType="submit" disabled={!changed}>
           Kaydet
         </Button>
+        {loading && <LoadingOutlined style={{ marginLeft: 10 }} />}
       </Form.Item>
     </Form>
   );

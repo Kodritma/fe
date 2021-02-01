@@ -2,8 +2,20 @@ import { notification } from "antd";
 
 type NotificationType = "success" | "error" | "info" | "warning";
 
-function notify(type: NotificationType, message: string, description: string) {
-  notification[type]({ message, description, placement: "bottomRight" });
+interface NotifyArgs {
+  type: NotificationType;
+  message: string;
+  description: string;
+  placement?: "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
+}
+
+function notify({
+  type,
+  message,
+  description,
+  placement = "bottomRight",
+}: NotifyArgs) {
+  notification[type]({ message, description, placement });
 }
 
 export default notify;

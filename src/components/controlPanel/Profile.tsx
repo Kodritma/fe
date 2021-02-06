@@ -6,7 +6,7 @@ import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 // Local imports
 import { AuthContext } from "../../authContext";
 import axiosWithAuth from "../../utils/axiosWithAuth";
-import notify from "../notify";
+import notify from "../componentUtils/notify";
 
 // Components
 import InnerHeader from "./InnerHeader";

@@ -13,11 +13,7 @@ const Header = () => {
   const history = useHistory();
 
   const avatar = (
-    <img
-      src={picture}
-      alt="Kullanıcı Profil Resmi"
-      style={{ width: 24, borderRadius: 12 }}
-    />
+    <img src={picture} alt="Kullanıcı Profil Resmi" style={{ width: 24, borderRadius: 12 }} />
   );
 
   return (
@@ -27,7 +23,9 @@ const Header = () => {
       </Link>
       <Menu theme="dark" mode="horizontal">
         <Menu.Item key="1">Algoritma Alıştırmaları</Menu.Item>
-        <Menu.Item key="2">Videolu Dersler</Menu.Item>
+        <Menu.Item key="2">
+          <Link to="/videolu-dersler">Videolu Dersler</Link>
+        </Menu.Item>
         <Menu.Item key="3">
           <a href="https://forum.kodritma.com" title="Kodritma Forum">
             Forum

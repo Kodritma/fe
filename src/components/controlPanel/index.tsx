@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Layout, Menu } from "antd";
+import { Divider, Layout, Menu } from "antd";
 import {
   CarryOutOutlined,
   FileTextOutlined,
+  OrderedListOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -11,6 +12,7 @@ import Home from "./Home";
 import Progress from "./Progress";
 import Profile from "./Profile";
 import Settings from "./Settings";
+import Playlist from "./Playlist";
 
 const { Content, Sider } = Layout;
 
@@ -25,6 +27,8 @@ function Panel() {
         return <Profile />;
       case "3":
         return <Settings />;
+      case "4":
+        return <Playlist />;
       case "0":
       default:
         return <Home />;
@@ -51,6 +55,13 @@ function Panel() {
           </Menu.Item>
           <Menu.Item icon={<SettingOutlined />} key="3">
             Ayarlar
+          </Menu.Item>
+          <Divider orientation="left" plain style={{ color: "white" }}></Divider>
+          <Divider orientation="left" plain style={{ color: "white" }}>
+            Site Yönetimi
+          </Divider>{" "}
+          <Menu.Item icon={<OrderedListOutlined />} key="4">
+            Çalma Listeleri
           </Menu.Item>
         </Menu>
       </Sider>

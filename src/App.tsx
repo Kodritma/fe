@@ -1,11 +1,17 @@
+// Global
 import { Layout } from "antd";
-import Footer from "./components/Footer";
+import { Route } from "react-router-dom";
+
+// Local
+import AuthProvider from "./authContext";
+
+// Components
 import Header from "./components/Header";
 import Home from "./components/Home";
-import { Route } from "react-router-dom";
 import Authenticate from "./components/Authenticate";
-import AuthProvider from "./authContext";
 import ControlPanel from "./components/controlPanel";
+import VideoTutorials from "./components/videoTutorials";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -14,6 +20,7 @@ function App() {
         <Header />
         <Route exact path="/" component={Home} />
         <Route exact path="/authenticate" component={Authenticate} />
+        <Route exact path="/videolu-dersler" component={VideoTutorials} />
         <Route exact path="/user/panel" component={ControlPanel} />
         <Footer />
       </Layout>

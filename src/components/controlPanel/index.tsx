@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Divider, Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import {
   CarryOutOutlined,
   FileTextOutlined,
@@ -56,10 +56,6 @@ function Panel() {
           <Menu.Item icon={<SettingOutlined />} key="3">
             Ayarlar
           </Menu.Item>
-          <Divider orientation="left" plain style={{ color: "white" }}></Divider>
-          <Divider orientation="left" plain style={{ color: "white" }}>
-            Site Yönetimi
-          </Divider>{" "}
           <Menu.Item icon={<OrderedListOutlined />} key="4">
             Çalma Listeleri
           </Menu.Item>

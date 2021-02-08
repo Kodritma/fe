@@ -10,6 +10,7 @@ interface Playlist {
   name: string;
   slug: string;
   image: string;
+  is_archived: boolean;
 }
 function VideoTutorials() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -18,7 +19,7 @@ function VideoTutorials() {
     axiosWithAuth()
       .get<Playlist[]>("/playlists")
       .then((res) => {
-        setPlaylists(res.data);
+        setPlaylists(res.data.filter((p) => !p.is_archived));
       });
   };
 
@@ -28,14 +29,14 @@ function VideoTutorials() {
 
   return (
     <Content className="playlists">
-      <Row gutter={[16, 16]}>
+      <Row gutter={[24, 24]}>
         {playlists.map(({ ID, name, slug, image }) => {
           return (
-            <Col xs={24} md={8} lg={6} key={ID}>
+            <Col xs={24} sm={12} md={8} lg={6} xxl={4} key={ID}>
               <Card
                 hoverable
                 bordered={false}
-                cover={<img src={process.env.REACT_APP_BACKEND + "/uploads/" + image} />}
+                cover={<img alt={name} src={process.env.REACT_APP_BACKEND + "/uploads/" + image} />}
               >
                 <Meta title={<Link to={`/videolu-dersler/${slug}`}>{name}</Link>} />
               </Card>

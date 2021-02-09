@@ -6,10 +6,11 @@ import notify from "../componentUtils/notify";
 
 interface IImageUpload {
   setImage: React.Dispatch<React.SetStateAction<string>>;
+  currentImage?: string;
 }
-
 function ImageUpload(props: IImageUpload) {
-  const { setImage } = props;
+  const { setImage, currentImage } = props;
+  console.log({ currentImage });
 
   const draggerProps: DraggerProps = {
     name: "file",
@@ -17,6 +18,10 @@ function ImageUpload(props: IImageUpload) {
     withCredentials: true,
     action: process.env.REACT_APP_BACKEND + "/upload",
     onChange(info: any) {
+      if (currentImage !== "default.jpg") {
+        axiosWithAuth().delete("/upload/" + currentImage);
+      }
+
       const { status } = info.file;
       if (status !== "uploading") {
       }

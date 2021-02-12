@@ -1,5 +1,6 @@
 import { Layout, Carousel } from "antd";
 const { Content } = Layout;
+
 const Home = () => {
   return (
     <Content className="content-style">

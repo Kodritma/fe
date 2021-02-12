@@ -8,7 +8,7 @@ import googleLoginUrl from "../utils/googleLoginUrl";
 
 const { Header: AntHeader } = Layout;
 
-const Header = () => {
+const Header = (): JSX.Element => {
   const { isLoggedIn, loading, picture, logout } = useContext(AuthContext);
   const history = useHistory();
 
@@ -21,7 +21,7 @@ const Header = () => {
       <Link to="/">
         <img src={logo} alt="Kodritma Logo" />
       </Link>
-      <Menu theme="dark" mode="horizontal">
+      <Menu theme="dark" mode="horizontal" selectedKeys={[]}>
         <Menu.Item key="1">Algoritma Alıştırmaları</Menu.Item>
         <Menu.Item key="2">
           <Link to="/videolu-dersler">Videolu Dersler</Link>

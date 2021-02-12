@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../authContext";
 import InnerHeader from "./InnerHeader";
 
-function Home() {
+function PanelHome() {
   const details = useContext(AuthContext);
 
   return (
@@ -18,4 +18,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default PanelHome;

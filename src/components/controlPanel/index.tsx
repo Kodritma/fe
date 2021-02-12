@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import {
   CarryOutOutlined,
@@ -8,7 +9,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
-import Home from "./Home";
+import PanelHome from "./PanelHome";
 import Progress from "./Progress";
 import Profile from "./Profile";
 import Settings from "./Settings";
@@ -19,21 +20,7 @@ const { Content, Sider } = Layout;
 function Panel() {
   const [selected, setSelected] = useState<string>("0");
 
-  const renderPanelContent = () => {
-    switch (selected) {
-      case "1":
-        return <Progress />;
-      case "2":
-        return <Profile />;
-      case "3":
-        return <Settings />;
-      case "4":
-        return <Playlist />;
-      case "0":
-      default:
-        return <Home />;
-    }
-  };
+  let { path, url } = useRouteMatch();
 
   return (
     <Layout className="site-layout-background">
@@ -45,23 +32,31 @@ function Panel() {
           selectedKeys={[selected]}
         >
           <Menu.Item icon={<FileTextOutlined />} key="0">
-            Özet
+            <Link to={`${url}`}>Özet</Link>
           </Menu.Item>
           <Menu.Item icon={<CarryOutOutlined />} key="1">
-            Seviye Detayları
+            <Link to={`${url}/progress`}>Seviye Detayları</Link>
           </Menu.Item>
           <Menu.Item icon={<UserOutlined />} key="2">
-            Profil
+            <Link to={`${url}/profile`}>Profil</Link>
           </Menu.Item>
           <Menu.Item icon={<SettingOutlined />} key="3">
-            Ayarlar
+            <Link to={`${url}/settings`}>Ayarlar</Link>
           </Menu.Item>
           <Menu.Item icon={<OrderedListOutlined />} key="4">
-            Çalma Listeleri
+            <Link to={`${url}/playlist`}>Çalma Listeleri</Link>
           </Menu.Item>
         </Menu>
       </Sider>
-      <Content>{renderPanelContent()}</Content>
+      <Content>
+        <Switch>
+          <Route path={path} exact component={PanelHome} />
+          <Route path={`${path}/progress`} component={Progress} />
+          <Route path={`${path}/profile`} component={Profile} />
+          <Route path={`${path}/settings`} component={Settings} />
+          <Route path={`${path}/playlist`} component={Playlist} />
+        </Switch>
+      </Content>
     </Layout>
   );
 }

@@ -1,6 +1,6 @@
 // Global
 import { Layout } from "antd";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 // Local
 import AuthProvider from "./authContext";
@@ -18,10 +18,12 @@ function App() {
     <AuthProvider>
       <Layout className="height-100">
         <Header />
-        <Route exact path="/" component={Home} />
-        <Route exact path="/authenticate" component={Authenticate} />
-        <Route exact path="/videolu-dersler" component={VideoTutorials} />
-        <Route exact path="/user/panel" component={ControlPanel} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/authenticate" component={Authenticate} />
+          <Route path="/videolu-dersler" component={VideoTutorials} />
+          <Route path="/user/panel" component={ControlPanel} />
+        </Switch>
         <Footer />
       </Layout>
     </AuthProvider>

@@ -2,7 +2,7 @@
 import { Layout } from "antd";
 import { Route, Switch } from "react-router-dom";
 
-// Local
+// Local imports
 import AuthProvider from "./authContext";
 
 // Components

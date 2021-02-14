@@ -14,7 +14,6 @@ function Playlist() {
   const [showForm, setShowForm] = useState(false);
   const [toEditID, setToEditID] = useState<string>("");
 
-  console.log({ toEditID });
   const archivePlaylist = (bool: boolean, id: string) => {
     axiosWithAuth()
       .put("/playlists/archive/" + id, { bool })

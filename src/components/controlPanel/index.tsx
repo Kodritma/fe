@@ -7,6 +7,7 @@ import {
   OrderedListOutlined,
   SettingOutlined,
   UserOutlined,
+  VideoCameraOutlined,
 } from "@ant-design/icons";
 
 import PanelHome from "./PanelHome";
@@ -14,6 +15,7 @@ import Progress from "./Progress";
 import Profile from "./Profile";
 import Settings from "./Settings";
 import Playlist from "./Playlist";
+import Videos from "./Videos";
 
 const { Content, Sider } = Layout;
 
@@ -46,6 +48,9 @@ function Panel() {
           <Menu.Item icon={<OrderedListOutlined />} key="4">
             <Link to={`${url}/playlist`}>Çalma Listeleri</Link>
           </Menu.Item>
+          <Menu.Item icon={<VideoCameraOutlined />} key="5">
+            <Link to={`${url}/videos`}>Videolar</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Content>
@@ -55,6 +60,7 @@ function Panel() {
           <Route path={`${path}/profile`} component={Profile} />
           <Route path={`${path}/settings`} component={Settings} />
           <Route path={`${path}/playlist`} component={Playlist} />
+          <Route path={`${path}/videos`} component={Videos} />
         </Switch>
       </Content>
     </Layout>

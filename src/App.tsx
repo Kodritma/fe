@@ -1,39 +1,32 @@
-import { Layout, Menu, Carousel } from "antd";
-import logo from "./images/logo.png";
+// Global
+import { Layout } from "antd";
+import { Route, Switch } from "react-router-dom";
 
-const { Header, Content, Footer } = Layout;
+// Local imports
+import AuthProvider from "./authContext";
+
+// Components
+import Header from "./components/Header";
+import Home from "./components/Home";
+import Authenticate from "./components/Authenticate";
+import ControlPanel from "./components/controlPanel";
+import VideoTutorials from "./components/videoTutorials";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <Layout className="height-100">
-      <Header className="header">
-        <img src={logo} />
-        <Menu theme="dark" mode="horizontal">
-          <Menu.Item key="1">Algoritma Alıştırmaları</Menu.Item>
-          <Menu.Item key="2">Videolu Dersler</Menu.Item>
-          <Menu.Item key="3">Forum</Menu.Item>
-          <Menu.Item key="4">Blog</Menu.Item>
-          <Menu.Item key="5">Üye Girişi</Menu.Item>
-        </Menu>
-      </Header>
-      <Content style={{ display:"flex", alignItems:"center", justifyContent:"center"}}>
-        <Carousel autoplay style={{width:"90vw"}}>
-          <div>
-            <h3 className="carousel-title">1</h3>
-          </div>
-          <div>
-            <h3 className="carousel-title">2</h3>
-          </div>
-          <div>
-            <h3 className="carousel-title">3</h3>
-          </div>
-          <div>
-            <h3 className="carousel-title">4</h3>
-          </div>
-        </Carousel>
-      </Content>
-      <Footer style={{ textAlign: "center" }}>Kodritma © 2020</Footer>
-    </Layout>
+    <AuthProvider>
+      <Layout className="height-100">
+        <Header />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/authenticate" component={Authenticate} />
+          <Route path="/videolu-dersler" component={VideoTutorials} />
+          <Route path="/user/panel" component={ControlPanel} />
+        </Switch>
+        <Footer />
+      </Layout>
+    </AuthProvider>
   );
 }
 
